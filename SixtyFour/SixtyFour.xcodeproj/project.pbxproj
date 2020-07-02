@@ -19,6 +19,10 @@
 		4CCB283E24AE78FF00E3241C /* UserDefaults+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB283D24AE78FF00E3241C /* UserDefaults+Properties.swift */; };
 		4CCB284024AE7B3800E3241C /* ModelConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB283F24AE7B3800E3241C /* ModelConverter.swift */; };
 		4CCB284224AE7BA900E3241C /* ModelConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB284124AE7BA900E3241C /* ModelConverterTests.swift */; };
+		4CCB284624AE844600E3241C /* cat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CCB284524AE844600E3241C /* cat.jpg */; };
+		4CCB284824AE846500E3241C /* base64ConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB284724AE846500E3241C /* base64ConverterTests.swift */; };
+		4CCB284924AE89EC00E3241C /* cat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CCB284524AE844600E3241C /* cat.jpg */; };
+		4CCB284B24AE8B8F00E3241C /* UIImage+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB284A24AE8B8F00E3241C /* UIImage+Base64.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +52,9 @@
 		4CCB283D24AE78FF00E3241C /* UserDefaults+Properties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Properties.swift"; sourceTree = "<group>"; };
 		4CCB283F24AE7B3800E3241C /* ModelConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelConverter.swift; sourceTree = "<group>"; };
 		4CCB284124AE7BA900E3241C /* ModelConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelConverterTests.swift; sourceTree = "<group>"; };
+		4CCB284524AE844600E3241C /* cat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cat.jpg; sourceTree = "<group>"; };
+		4CCB284724AE846500E3241C /* base64ConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = base64ConverterTests.swift; sourceTree = "<group>"; };
+		4CCB284A24AE8B8F00E3241C /* UIImage+Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Base64.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,15 +96,8 @@
 		4CCB281124AE5DD900E3241C /* SixtyFour */ = {
 			isa = PBXGroup;
 			children = (
-				4CCB283C24AE78E900E3241C /* Extensions */,
-				4CCB283724AE765600E3241C /* Models */,
-				4CCB281224AE5DD900E3241C /* AppDelegate.swift */,
-				4CCB281424AE5DD900E3241C /* SceneDelegate.swift */,
-				4CCB281624AE5DD900E3241C /* ViewController.swift */,
-				4CCB281824AE5DD900E3241C /* Main.storyboard */,
-				4CCB281B24AE5DDD00E3241C /* Assets.xcassets */,
-				4CCB281D24AE5DDD00E3241C /* LaunchScreen.storyboard */,
-				4CCB282024AE5DDD00E3241C /* Info.plist */,
+				4CCB284324AE841C00E3241C /* Source */,
+				4CCB284424AE842C00E3241C /* Resource */,
 			);
 			path = SixtyFour;
 			sourceTree = "<group>";
@@ -109,6 +109,7 @@
 				4CCB283A24AE77BE00E3241C /* MockOCRModel.swift */,
 				4CCB284124AE7BA900E3241C /* ModelConverterTests.swift */,
 				4CCB283524AE75C900E3241C /* OCRModelTests.swift */,
+				4CCB284724AE846500E3241C /* base64ConverterTests.swift */,
 			);
 			path = SixtyFourTests;
 			sourceTree = "<group>";
@@ -126,8 +127,33 @@
 			isa = PBXGroup;
 			children = (
 				4CCB283D24AE78FF00E3241C /* UserDefaults+Properties.swift */,
+				4CCB284A24AE8B8F00E3241C /* UIImage+Base64.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4CCB284324AE841C00E3241C /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				4CCB283C24AE78E900E3241C /* Extensions */,
+				4CCB283724AE765600E3241C /* Models */,
+				4CCB281224AE5DD900E3241C /* AppDelegate.swift */,
+				4CCB281424AE5DD900E3241C /* SceneDelegate.swift */,
+				4CCB281624AE5DD900E3241C /* ViewController.swift */,
+				4CCB281824AE5DD900E3241C /* Main.storyboard */,
+				4CCB281D24AE5DDD00E3241C /* LaunchScreen.storyboard */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		4CCB284424AE842C00E3241C /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				4CCB284524AE844600E3241C /* cat.jpg */,
+				4CCB281B24AE5DDD00E3241C /* Assets.xcassets */,
+				4CCB282024AE5DDD00E3241C /* Info.plist */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,6 +241,7 @@
 			files = (
 				4CCB281F24AE5DDD00E3241C /* LaunchScreen.storyboard in Resources */,
 				4CCB281C24AE5DDD00E3241C /* Assets.xcassets in Resources */,
+				4CCB284924AE89EC00E3241C /* cat.jpg in Resources */,
 				4CCB281A24AE5DD900E3241C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -223,6 +250,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CCB284624AE844600E3241C /* cat.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,6 +288,7 @@
 				4CCB283924AE767C00E3241C /* OCRModel.swift in Sources */,
 				4CCB284024AE7B3800E3241C /* ModelConverter.swift in Sources */,
 				4CCB281524AE5DD900E3241C /* SceneDelegate.swift in Sources */,
+				4CCB284B24AE8B8F00E3241C /* UIImage+Base64.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CCB283B24AE77BE00E3241C /* MockOCRModel.swift in Sources */,
+				4CCB284824AE846500E3241C /* base64ConverterTests.swift in Sources */,
 				4CCB284224AE7BA900E3241C /* ModelConverterTests.swift in Sources */,
 				4CCB283624AE75C900E3241C /* OCRModelTests.swift in Sources */,
 			);
@@ -424,7 +454,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GK5S624D99;
-				INFOPLIST_FILE = SixtyFour/Info.plist;
+				INFOPLIST_FILE = SixtyFour/Resource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -445,7 +475,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GK5S624D99;
-				INFOPLIST_FILE = SixtyFour/Info.plist;
+				INFOPLIST_FILE = SixtyFour/Resource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
