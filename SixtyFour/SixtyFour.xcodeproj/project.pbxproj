@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,6 +23,7 @@
 		4CCB284824AE846500E3241C /* base64ConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB284724AE846500E3241C /* base64ConverterTests.swift */; };
 		4CCB284924AE89EC00E3241C /* cat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CCB284524AE844600E3241C /* cat.jpg */; };
 		4CCB284B24AE8B8F00E3241C /* UIImage+Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB284A24AE8B8F00E3241C /* UIImage+Base64.swift */; };
+		4CCB284E24AE90AB00E3241C /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB284D24AE90AB00E3241C /* Moya */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CCB284E24AE90AB00E3241C /* Moya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +175,9 @@
 			dependencies = (
 			);
 			name = SixtyFour;
+			packageProductDependencies = (
+				4CCB284D24AE90AB00E3241C /* Moya */,
+			);
 			productName = SixtyFour;
 			productReference = 4CCB280F24AE5DD900E3241C /* SixtyFour.app */;
 			productType = "com.apple.product-type.application";
@@ -224,6 +229,9 @@
 				Base,
 			);
 			mainGroup = 4CCB280624AE5DD900E3241C;
+			packageReferences = (
+				4CCB284C24AE90AB00E3241C /* XCRemoteSwiftPackageReference "Moya" */,
+			);
 			productRefGroup = 4CCB281024AE5DD900E3241C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -567,6 +575,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4CCB284C24AE90AB00E3241C /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 14.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4CCB284D24AE90AB00E3241C /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4CCB284C24AE90AB00E3241C /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4CCB280724AE5DD900E3241C /* Project object */;
 }
