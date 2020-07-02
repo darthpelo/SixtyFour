@@ -13,7 +13,12 @@
 		4CCB281A24AE5DD900E3241C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CCB281824AE5DD900E3241C /* Main.storyboard */; };
 		4CCB281C24AE5DDD00E3241C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CCB281B24AE5DDD00E3241C /* Assets.xcassets */; };
 		4CCB281F24AE5DDD00E3241C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CCB281D24AE5DDD00E3241C /* LaunchScreen.storyboard */; };
-		4CCB282A24AE5DDD00E3241C /* SixtyFourTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB282924AE5DDD00E3241C /* SixtyFourTests.swift */; };
+		4CCB283624AE75C900E3241C /* OCRModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB283524AE75C900E3241C /* OCRModelTests.swift */; };
+		4CCB283924AE767C00E3241C /* OCRModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB283824AE767C00E3241C /* OCRModel.swift */; };
+		4CCB283B24AE77BE00E3241C /* MockOCRModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB283A24AE77BE00E3241C /* MockOCRModel.swift */; };
+		4CCB283E24AE78FF00E3241C /* UserDefaults+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB283D24AE78FF00E3241C /* UserDefaults+Properties.swift */; };
+		4CCB284024AE7B3800E3241C /* ModelConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB283F24AE7B3800E3241C /* ModelConverter.swift */; };
+		4CCB284224AE7BA900E3241C /* ModelConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB284124AE7BA900E3241C /* ModelConverterTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,8 +41,13 @@
 		4CCB281E24AE5DDD00E3241C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4CCB282024AE5DDD00E3241C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CCB282524AE5DDD00E3241C /* SixtyFourTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SixtyFourTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4CCB282924AE5DDD00E3241C /* SixtyFourTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SixtyFourTests.swift; sourceTree = "<group>"; };
 		4CCB282B24AE5DDD00E3241C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4CCB283524AE75C900E3241C /* OCRModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRModelTests.swift; sourceTree = "<group>"; };
+		4CCB283824AE767C00E3241C /* OCRModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRModel.swift; sourceTree = "<group>"; };
+		4CCB283A24AE77BE00E3241C /* MockOCRModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOCRModel.swift; sourceTree = "<group>"; };
+		4CCB283D24AE78FF00E3241C /* UserDefaults+Properties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Properties.swift"; sourceTree = "<group>"; };
+		4CCB283F24AE7B3800E3241C /* ModelConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelConverter.swift; sourceTree = "<group>"; };
+		4CCB284124AE7BA900E3241C /* ModelConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelConverterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +89,8 @@
 		4CCB281124AE5DD900E3241C /* SixtyFour */ = {
 			isa = PBXGroup;
 			children = (
+				4CCB283C24AE78E900E3241C /* Extensions */,
+				4CCB283724AE765600E3241C /* Models */,
 				4CCB281224AE5DD900E3241C /* AppDelegate.swift */,
 				4CCB281424AE5DD900E3241C /* SceneDelegate.swift */,
 				4CCB281624AE5DD900E3241C /* ViewController.swift */,
@@ -93,10 +105,29 @@
 		4CCB282824AE5DDD00E3241C /* SixtyFourTests */ = {
 			isa = PBXGroup;
 			children = (
-				4CCB282924AE5DDD00E3241C /* SixtyFourTests.swift */,
 				4CCB282B24AE5DDD00E3241C /* Info.plist */,
+				4CCB283A24AE77BE00E3241C /* MockOCRModel.swift */,
+				4CCB284124AE7BA900E3241C /* ModelConverterTests.swift */,
+				4CCB283524AE75C900E3241C /* OCRModelTests.swift */,
 			);
 			path = SixtyFourTests;
+			sourceTree = "<group>";
+		};
+		4CCB283724AE765600E3241C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4CCB283824AE767C00E3241C /* OCRModel.swift */,
+				4CCB283F24AE7B3800E3241C /* ModelConverter.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4CCB283C24AE78E900E3241C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4CCB283D24AE78FF00E3241C /* UserDefaults+Properties.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,6 +184,7 @@
 					};
 					4CCB282424AE5DDD00E3241C = {
 						CreatedOnToolsVersion = 11.5;
+						LastSwiftMigration = 1150;
 						TestTargetID = 4CCB280E24AE5DD900E3241C;
 					};
 				};
@@ -224,6 +256,9 @@
 			files = (
 				4CCB281724AE5DD900E3241C /* ViewController.swift in Sources */,
 				4CCB281324AE5DD900E3241C /* AppDelegate.swift in Sources */,
+				4CCB283E24AE78FF00E3241C /* UserDefaults+Properties.swift in Sources */,
+				4CCB283924AE767C00E3241C /* OCRModel.swift in Sources */,
+				4CCB284024AE7B3800E3241C /* ModelConverter.swift in Sources */,
 				4CCB281524AE5DD900E3241C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,7 +267,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CCB282A24AE5DDD00E3241C /* SixtyFourTests.swift in Sources */,
+				4CCB283B24AE77BE00E3241C /* MockOCRModel.swift in Sources */,
+				4CCB284224AE7BA900E3241C /* ModelConverterTests.swift in Sources */,
+				4CCB283624AE75C900E3241C /* OCRModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +464,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GK5S624D99;
 				INFOPLIST_FILE = SixtyFourTests/Info.plist;
@@ -438,6 +476,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.alessioroberto.SixtyFourTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SixtyFour.app/SixtyFour";
@@ -449,6 +488,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GK5S624D99;
 				INFOPLIST_FILE = SixtyFourTests/Info.plist;
