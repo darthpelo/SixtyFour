@@ -58,10 +58,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell",
+                                                       for: indexPath) as? OCRTableViewCell else {
+            return UITableViewCell()
+        }
 
-        cell.textLabel?.text = list[indexPath.row].text
-        cell.detailTextLabel?.text = list[indexPath.row].ocrId
+        cell.titleLabel.text = list[indexPath.row].text
+        cell.confidenceLabel.text = "\(list[indexPath.row].confidence * 100)%"
+        cell.ocrId.text = list[indexPath.row].ocrId
+        cell.orcImage.image = UIImage(base64String: list[indexPath.row].imageString)
 
         return cell
     }

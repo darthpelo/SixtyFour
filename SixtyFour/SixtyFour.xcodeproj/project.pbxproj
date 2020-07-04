@@ -19,6 +19,7 @@
 		4C52850424B0A92C00FA7482 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C52850324B0A92C00FA7482 /* RootCoordinator.swift */; };
 		4C52850624B0AA3A00FA7482 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C52850524B0AA3A00FA7482 /* HomeCoordinator.swift */; };
 		4C52850E24B0B09D00FA7482 /* SixtyFourUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C52850D24B0B09D00FA7482 /* SixtyFourUITests.swift */; };
+		4C52851924B0BD8300FA7482 /* OCRTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C52851824B0BD8300FA7482 /* OCRTableViewCell.swift */; };
 		4CCB281324AE5DD900E3241C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB281224AE5DD900E3241C /* AppDelegate.swift */; };
 		4CCB281524AE5DD900E3241C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB281424AE5DD900E3241C /* SceneDelegate.swift */; };
 		4CCB281A24AE5DD900E3241C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CCB281824AE5DD900E3241C /* Main.storyboard */; };
@@ -72,6 +73,7 @@
 		4C52850B24B0B09D00FA7482 /* SixtyFourUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SixtyFourUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C52850D24B0B09D00FA7482 /* SixtyFourUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SixtyFourUITests.swift; sourceTree = "<group>"; };
 		4C52850F24B0B09D00FA7482 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C52851824B0BD8300FA7482 /* OCRTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRTableViewCell.swift; sourceTree = "<group>"; };
 		4CCB280F24AE5DD900E3241C /* SixtyFour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SixtyFour.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CCB281224AE5DD900E3241C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CCB281424AE5DD900E3241C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -165,6 +167,32 @@
 			path = SixtyFourUITests;
 			sourceTree = "<group>";
 		};
+		4C52851524B0BD3C00FA7482 /* AppDelegates */ = {
+			isa = PBXGroup;
+			children = (
+				4CCB281224AE5DD900E3241C /* AppDelegate.swift */,
+				4CCB281424AE5DD900E3241C /* SceneDelegate.swift */,
+			);
+			path = AppDelegates;
+			sourceTree = "<group>";
+		};
+		4C52851624B0BD4F00FA7482 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				4CCB281D24AE5DDD00E3241C /* LaunchScreen.storyboard */,
+				4CCB281824AE5DD900E3241C /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		4C52851724B0BD5F00FA7482 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4C52851824B0BD8300FA7482 /* OCRTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		4CCB280624AE5DD900E3241C = {
 			isa = PBXGroup;
 			children = (
@@ -232,16 +260,15 @@
 		4CCB284324AE841C00E3241C /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				4C5284F124AF73A400FA7482 /* Utils */,
+				4C52851524B0BD3C00FA7482 /* AppDelegates */,
 				4C5284EE24AF734800FA7482 /* Coordinator */,
-				4C5284ED24AF729E00FA7482 /* Scenes */,
-				4CCB285124AF193400E3241C /* Service */,
 				4CCB283C24AE78E900E3241C /* Extensions */,
 				4CCB283724AE765600E3241C /* Models */,
-				4CCB281224AE5DD900E3241C /* AppDelegate.swift */,
-				4CCB281424AE5DD900E3241C /* SceneDelegate.swift */,
-				4CCB281824AE5DD900E3241C /* Main.storyboard */,
-				4CCB281D24AE5DDD00E3241C /* LaunchScreen.storyboard */,
+				4C5284ED24AF729E00FA7482 /* Scenes */,
+				4CCB285124AF193400E3241C /* Service */,
+				4C52851624B0BD4F00FA7482 /* Storyboards */,
+				4C5284F124AF73A400FA7482 /* Utils */,
+				4C52851724B0BD5F00FA7482 /* Views */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -446,6 +473,7 @@
 				4CCB283924AE767C00E3241C /* OCRModel.swift in Sources */,
 				4CCB284024AE7B3800E3241C /* ModelConverter.swift in Sources */,
 				4C52850424B0A92C00FA7482 /* RootCoordinator.swift in Sources */,
+				4C52851924B0BD8300FA7482 /* OCRTableViewCell.swift in Sources */,
 				4CCB281524AE5DD900E3241C /* SceneDelegate.swift in Sources */,
 				4C5284F824AFB04200FA7482 /* HomeViewController.swift in Sources */,
 				4CCB285324AF194800E3241C /* MarloveService.swift in Sources */,
