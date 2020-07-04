@@ -56,10 +56,96 @@ class HomeViewPresenterTests: XCTestCase {
         let expectation = self.expectation(description: #function)
 
         sut.firstLoad { list in
+            XCTAssertTrue(list!.isEmpty)
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 1.0, handler: nil)
+    }
+
+    func testPresenterGetNewDataSuccess() {
+        let sut = HomePresenter(provider: stubProviderSuccess())
+
+        let expectation = self.expectation(description: #function)
+
+        sut.getNewData { list in
+            XCTAssertEqual(list!.count, 10)
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 1.0, handler: nil)
+    }
+
+    func testPresenterGetNewDataFailure() {
+        let sut = HomePresenter(provider: stubProviderFailure())
+
+        let expectation = self.expectation(description: #function)
+
+        sut.getNewData { list in
             XCTAssertNil(list)
             expectation.fulfill()
         }
 
         waitForExpectations(timeout: 1.0, handler: nil)
+    }
+
+    func testPresenterGetOldDataSuccess() {
+        let sut = HomePresenter(provider: stubProviderSuccess())
+
+        let expectation = self.expectation(description: #function)
+
+        sut.getOldData { list in
+            XCTAssertEqual(list!.count, 10)
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 1.0, handler: nil)
+    }
+
+    func testPresenterGetOldDataFailure() {
+        let sut = HomePresenter(provider: stubProviderFailure())
+
+        let expectation = self.expectation(description: #function)
+
+        sut.getOldData { list in
+            XCTAssertTrue(list!.isEmpty)
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 1.0, handler: nil)
+    }
+
+    func testFirstLoadAndGetOldData() {
+        let sut = HomePresenter(provider: stubProviderSuccess())
+
+        let expectation = self.expectation(description: #function)
+
+        sut.firstLoad { list in
+            XCTAssertEqual(list!.count, 10)
+        }
+
+        sut.getOldData { list in
+            XCTAssertEqual(list!.count, 20)
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 5.0, handler: nil)
+    }
+
+    func testFirstLoadAndGetNewData() {
+        let sut = HomePresenter(provider: stubProviderSuccess())
+
+        let expectation = self.expectation(description: #function)
+
+        sut.firstLoad { list in
+            XCTAssertEqual(list!.count, 10)
+        }
+
+        sut.getNewData { list in
+            XCTAssertEqual(list!.count, 20)
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
 }

@@ -28,7 +28,7 @@ class MarloveServiceTests: XCTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 2.0, handler: nil)
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
 
     func testSinceIDGet() {
