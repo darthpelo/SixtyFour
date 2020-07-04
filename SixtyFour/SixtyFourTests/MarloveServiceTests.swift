@@ -28,7 +28,7 @@ class MarloveServiceTests: XCTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: 2.0, handler: nil)
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
 
     func testSinceIDGet() {
@@ -88,6 +88,50 @@ class MarloveServiceTests: XCTestCase {
         waitForExpectations(timeout: 2.0, handler: nil)
     }
 
+    func testFailureResponse() {
+        let customEndpointClosure = { (target: MarloveService) -> Endpoint in
+            Endpoint(url: URL(target: target).absoluteString,
+                     sampleResponseClosure: { .networkResponse(401, Data()) },
+                     method: target.method,
+                     task: target.task,
+                     httpHeaderFields: target.headers)
+        }
+
+        let stubbingProvider = MoyaProvider<MarloveService>(endpointClosure: customEndpointClosure,
+                                                            stubClosure: MoyaProvider.immediatelyStub)
+
+        stubbingProvider.request(.items(sinceId: nil, maxId: nil)) { result in
+            switch result {
+            case let .success(moyaResponse):
+                XCTAssertEqual(moyaResponse.statusCode, 401)
+            case let .failure(moyaError):
+                XCTAssert(false, moyaError.errorDescription ?? "Simple items request failed")
+            }
+        }
+    }
+
+    func testNetworkError() {
+        let customEndpointClosure = { (target: MarloveService) -> Endpoint in
+            Endpoint(url: URL(target: target).absoluteString,
+                     sampleResponseClosure: { .networkError(NSError(domain: "timeout", code: 504, userInfo: nil)) },
+                     method: target.method,
+                     task: target.task,
+                     httpHeaderFields: target.headers)
+        }
+
+        let stubbingProvider = MoyaProvider<MarloveService>(endpointClosure: customEndpointClosure,
+                                                            stubClosure: MoyaProvider.immediatelyStub)
+
+        stubbingProvider.request(.items(sinceId: nil, maxId: nil)) { result in
+            switch result {
+            case let .success(moyaResponse):
+                XCTAssert(false)
+            case let .failure(moyaError):
+                XCTAssert(true, moyaError.errorDescription!)
+            }
+        }
+    }
+
     func testResponseDecode() {
         let endpointClosure = { (target: MarloveService) -> Endpoint in
             Endpoint(url: URL(target: target).absoluteString,
@@ -117,5 +161,25 @@ class MarloveServiceTests: XCTestCase {
         }
 
         waitForExpectations(timeout: 2.0, handler: nil)
+    }
+
+    func testResponseDelay() {
+        let sut = MoyaProvider<MarloveService>(stubClosure: MoyaProvider.delayedStub(5))
+
+        let expectation = self.expectation(description: #function)
+
+        sut.request(.items(sinceId: nil, maxId: nil)) { result in
+            // do something with the result (read on for more details)
+            switch result {
+            case let .success(moyaResponse):
+                XCTAssertEqual(moyaResponse.statusCode, 200)
+            case let .failure(moyaError):
+                XCTAssert(false, moyaError.errorDescription ?? "Simple items request failed")
+            }
+
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 6.0, handler: nil)
     }
 }
