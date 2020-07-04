@@ -42,8 +42,8 @@ class HomeViewPresenterTests: XCTestCase {
 
         let expectation = self.expectation(description: #function)
 
-        sut.firstLoad { list in
-            XCTAssertEqual(list!.count, 10)
+        sut.firstLoad(HomeViewController()) {
+            XCTAssertEqual(sut.dataSourceElements(), 10)
             expectation.fulfill()
         }
 
@@ -55,8 +55,8 @@ class HomeViewPresenterTests: XCTestCase {
 
         let expectation = self.expectation(description: #function)
 
-        sut.firstLoad { list in
-            XCTAssertTrue(list!.isEmpty)
+        sut.firstLoad(HomeViewController()) {
+            XCTAssertTrue(sut.dataSourceElements() == 0)
             expectation.fulfill()
         }
 
@@ -68,8 +68,8 @@ class HomeViewPresenterTests: XCTestCase {
 
         let expectation = self.expectation(description: #function)
 
-        sut.getNewData { list in
-            XCTAssertEqual(list!.count, 10)
+        sut.getNewData {
+            XCTAssertEqual(sut.dataSourceElements(), 10)
             expectation.fulfill()
         }
 
@@ -81,8 +81,8 @@ class HomeViewPresenterTests: XCTestCase {
 
         let expectation = self.expectation(description: #function)
 
-        sut.getNewData { list in
-            XCTAssertTrue(list!.isEmpty)
+        sut.getNewData {
+            XCTAssertTrue(sut.dataSourceElements() == 0)
             expectation.fulfill()
         }
 
@@ -94,8 +94,8 @@ class HomeViewPresenterTests: XCTestCase {
 
         let expectation = self.expectation(description: #function)
 
-        sut.getOldData { list in
-            XCTAssertEqual(list!.count, 10)
+        sut.getOldData {
+            XCTAssertTrue(sut.dataSourceElements() == 0)
             expectation.fulfill()
         }
 
@@ -107,8 +107,8 @@ class HomeViewPresenterTests: XCTestCase {
 
         let expectation = self.expectation(description: #function)
 
-        sut.getOldData { list in
-            XCTAssertTrue(list!.isEmpty)
+        sut.getOldData {
+            XCTAssertTrue(sut.dataSourceElements() == 0)
             expectation.fulfill()
         }
 
@@ -120,12 +120,12 @@ class HomeViewPresenterTests: XCTestCase {
 
         let expectation = self.expectation(description: #function)
 
-        sut.firstLoad { list in
-            XCTAssertEqual(list!.count, 10)
+        sut.firstLoad(HomeViewController()) {
+            XCTAssertEqual(sut.dataSourceElements(), 10)
         }
 
-        sut.getOldData { list in
-            XCTAssertEqual(list!.count, 20)
+        sut.getOldData {
+            XCTAssertEqual(sut.dataSourceElements(), 20)
             expectation.fulfill()
         }
 
@@ -137,12 +137,12 @@ class HomeViewPresenterTests: XCTestCase {
 
         let expectation = self.expectation(description: #function)
 
-        sut.firstLoad { list in
-            XCTAssertEqual(list!.count, 10)
+        sut.firstLoad(HomeViewController()) {
+            XCTAssertEqual(sut.dataSourceElements(), 10)
         }
 
-        sut.getNewData { list in
-            XCTAssertEqual(list!.count, 20)
+        sut.getNewData {
+            XCTAssertEqual(sut.dataSourceElements(), 20)
             expectation.fulfill()
         }
 

@@ -10,53 +10,86 @@ import Foundation
 import Moya
 
 protocol HomeInterface {
-    func firstLoad(completion: @escaping ([OCRModel]?) -> Void)
-    func getNewData(completion: @escaping ([OCRModel]?) -> Void)
-    func getOldData(completion: @escaping ([OCRModel]?) -> Void)
+    func firstLoad(_: HomeViewInterface, completion: @escaping () -> Void)
+    func getNewData(completion: @escaping () -> Void)
+    func getOldData(completion: @escaping () -> Void)
+    func dataSource(atIndex index: Int) -> OCRModel?
+    func dataSourceElements() -> Int
+}
+
+protocol HomeViewInterface {
+    func updateUI()
 }
 
 final class HomePresenter: HomeInterface {
     private let provider: MoyaProvider<MarloveService>
     private var list: [OCRModel] = []
+    private var view: HomeViewInterface?
 
     init(provider: MoyaProvider<MarloveService> = MoyaProvider<MarloveService>()) {
         self.provider = provider
     }
 
-    func firstLoad(completion: @escaping ([OCRModel]?) -> Void) {
+    func firstLoad(_ view: HomeViewInterface, completion: @escaping () -> Void) {
+        self.view = view
+
         provider.request(.items(sinceId: nil, maxId: nil)) { [weak self] result in
             guard let self = self else {
-                completion(nil)
+                completion()
                 return
             }
 
             self.list = self.decodeResult(result) ?? []
-            completion(self.list)
+            completion()
         }
     }
 
-    func getNewData(completion: @escaping ([OCRModel]?) -> Void) {
+    func getNewData(completion: @escaping () -> Void) {
         provider.request(.items(sinceId: "", maxId: nil)) { [weak self] result in
             guard let self = self else {
-                completion(nil)
+                completion()
                 return
             }
             var newList = self.decodeResult(result) ?? []
             newList.append(contentsOf: self.list)
             self.list = newList
-            completion(self.list)
+            completion()
         }
     }
 
-    func getOldData(completion: @escaping ([OCRModel]?) -> Void) {
-        provider.request(.items(sinceId: nil, maxId: "")) { [weak self] result in
+    func getOldData(completion: @escaping () -> Void) {
+        guard let lastElement = list.last else {
+            completion()
+            return
+        }
+
+        provider.request(.items(sinceId: nil, maxId: lastElement.ocrId)) { [weak self] result in
             guard let self = self else {
-                completion(nil)
+                completion()
                 return
             }
             self.list.append(contentsOf: self.decodeResult(result) ?? [])
-            completion(self.list)
+            completion()
         }
+    }
+
+    func dataSource(atIndex index: Int) -> OCRModel? {
+        guard index >= 0, index < list.count else {
+            return nil
+        }
+
+        if index == list.count - 1 {
+            DispatchQueue.global(qos: .background).async { [weak self] in
+                self?.getOldData {
+                    self?.view?.updateUI()
+                }
+            }
+        }
+        return list[index]
+    }
+
+    func dataSourceElements() -> Int {
+        list.count
     }
 
     // MARK: - Private

@@ -22,6 +22,6 @@ class SixtyFourUITests: XCTestCase {
         app.launch()
 
         XCTAssertTrue(app.tables.firstMatch.exists)
-        XCTAssertEqual(app.tables.children(matching: .cell).count, 10)
+        XCTAssertEqual(app.tables.children(matching: .cell).count, 20)
     }
 }

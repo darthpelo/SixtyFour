@@ -13,7 +13,6 @@ final class HomeViewController: UIViewController {
     @IBOutlet var ocrList: UITableView!
 
     private var presenter: HomeInterface?
-    private var list: [OCRModel] = []
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -24,16 +23,13 @@ final class HomeViewController: UIViewController {
         emptyContentSpinner.hidesWhenStopped = true
         emptyContentSpinner.startAnimating()
 
-        presenter?.firstLoad(completion: { [weak self] result in
-            if let list = result, list.isEmpty == false {
-                self?.list = list
-                DispatchQueue.main.async {
-                    self?.ocrList.isHidden = false
-                    self?.ocrList.reloadData()
-                    self?.emptyContentSpinner.stopAnimating()
-                }
+        presenter?.firstLoad(self) { [weak self] in
+            DispatchQueue.main.async {
+                self?.ocrList.isHidden = false
+                self?.ocrList.reloadData()
+                self?.emptyContentSpinner.stopAnimating()
             }
-        })
+        }
     }
 }
 
@@ -50,23 +46,32 @@ extension HomeViewController {
     }
 }
 
+// MARK: - HomeViewInterface
+
+extension HomeViewController: HomeViewInterface {
+    func updateUI() {
+        ocrList.reloadData()
+    }
+}
+
 // MARK: - UITableView Delegates
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        list.count
+        presenter?.dataSourceElements() ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell",
-                                                       for: indexPath) as? OCRTableViewCell else {
+                                                       for: indexPath) as? OCRTableViewCell,
+            let element = presenter?.dataSource(atIndex: indexPath.row) else {
             return UITableViewCell()
         }
 
-        cell.titleLabel.text = list[indexPath.row].text
-        cell.confidenceLabel.text = "\(list[indexPath.row].confidence * 100)%"
-        cell.ocrId.text = list[indexPath.row].ocrId
-        cell.orcImage.image = UIImage(base64String: list[indexPath.row].imageString)
+        cell.titleLabel.text = element.text
+        cell.confidenceLabel.text = "\(element.confidence * 100)%"
+        cell.ocrId.text = element.ocrId
+        cell.orcImage.image = UIImage(base64String: element.imageString)
 
         return cell
     }
