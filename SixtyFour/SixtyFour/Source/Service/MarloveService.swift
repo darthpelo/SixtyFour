@@ -55,6 +55,11 @@ extension MarloveService: TargetType {
     }
 
     var headers: [String: String]? {
-        ["Authorization": "e2e118d8a9d6f95ae7909a5d89c45f6b"]
+        do {
+            let token = try Preferences.getToken()
+            return ["Authorization": token]
+        } catch {
+            return nil
+        }
     }
 }

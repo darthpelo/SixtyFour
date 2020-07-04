@@ -12,6 +12,9 @@
 		4C5284F524AFADBF00FA7482 /* HomeViewPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5284F424AFADBF00FA7482 /* HomeViewPresenterTests.swift */; };
 		4C5284F824AFB04200FA7482 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5284F724AFB04200FA7482 /* HomeViewController.swift */; };
 		4C5284FA24AFB04D00FA7482 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5284F924AFB04D00FA7482 /* HomePresenter.swift */; };
+		4C5284FC24B08F4100FA7482 /* Preferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C5284FB24B08F4100FA7482 /* Preferences.plist */; };
+		4C5284FE24B08F9F00FA7482 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5284FD24B08F9F00FA7482 /* Preferences.swift */; };
+		4C52850024B091BC00FA7482 /* PreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5284FF24B091BC00FA7482 /* PreferencesTests.swift */; };
 		4CCB281324AE5DD900E3241C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB281224AE5DD900E3241C /* AppDelegate.swift */; };
 		4CCB281524AE5DD900E3241C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB281424AE5DD900E3241C /* SceneDelegate.swift */; };
 		4CCB281A24AE5DD900E3241C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CCB281824AE5DD900E3241C /* Main.storyboard */; };
@@ -49,6 +52,9 @@
 		4C5284F424AFADBF00FA7482 /* HomeViewPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenterTests.swift; sourceTree = "<group>"; };
 		4C5284F724AFB04200FA7482 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		4C5284F924AFB04D00FA7482 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
+		4C5284FB24B08F4100FA7482 /* Preferences.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Preferences.plist; sourceTree = "<group>"; };
+		4C5284FD24B08F9F00FA7482 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		4C5284FF24B091BC00FA7482 /* PreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesTests.swift; sourceTree = "<group>"; };
 		4CCB280F24AE5DD900E3241C /* SixtyFour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SixtyFour.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CCB281224AE5DD900E3241C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CCB281424AE5DD900E3241C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -161,6 +167,7 @@
 				4CCB284124AE7BA900E3241C /* ModelConverterTests.swift */,
 				4CCB283524AE75C900E3241C /* OCRModelTests.swift */,
 				4C5284F424AFADBF00FA7482 /* HomeViewPresenterTests.swift */,
+				4C5284FF24B091BC00FA7482 /* PreferencesTests.swift */,
 			);
 			path = SixtyFourTests;
 			sourceTree = "<group>";
@@ -170,6 +177,7 @@
 			children = (
 				4CCB283824AE767C00E3241C /* OCRModel.swift */,
 				4CCB283F24AE7B3800E3241C /* ModelConverter.swift */,
+				4C5284FD24B08F9F00FA7482 /* Preferences.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -207,6 +215,7 @@
 				4CCB281B24AE5DDD00E3241C /* Assets.xcassets */,
 				4CCB282024AE5DDD00E3241C /* Info.plist */,
 				4CCB284F24AF17D800E3241C /* stubResponse.json */,
+				4C5284FB24B08F4100FA7482 /* Preferences.plist */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -309,6 +318,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CCB281F24AE5DDD00E3241C /* LaunchScreen.storyboard in Resources */,
+				4C5284FC24B08F4100FA7482 /* Preferences.plist in Resources */,
 				4CCB281C24AE5DDD00E3241C /* Assets.xcassets in Resources */,
 				4CCB284924AE89EC00E3241C /* cat.jpg in Resources */,
 				4CCB285024AF17D900E3241C /* stubResponse.json in Resources */,
@@ -354,6 +364,7 @@
 			files = (
 				4CCB281324AE5DD900E3241C /* AppDelegate.swift in Sources */,
 				4CCB283E24AE78FF00E3241C /* UserDefaults+Properties.swift in Sources */,
+				4C5284FE24B08F9F00FA7482 /* Preferences.swift in Sources */,
 				4CCB283924AE767C00E3241C /* OCRModel.swift in Sources */,
 				4CCB284024AE7B3800E3241C /* ModelConverter.swift in Sources */,
 				4CCB281524AE5DD900E3241C /* SceneDelegate.swift in Sources */,
@@ -376,6 +387,7 @@
 				4CCB285524AF210100E3241C /* MarloveServiceTests.swift in Sources */,
 				4CCB284224AE7BA900E3241C /* ModelConverterTests.swift in Sources */,
 				4CCB283624AE75C900E3241C /* OCRModelTests.swift in Sources */,
+				4C52850024B091BC00FA7482 /* PreferencesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
