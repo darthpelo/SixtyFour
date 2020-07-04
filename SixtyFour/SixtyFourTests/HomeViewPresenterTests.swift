@@ -82,7 +82,7 @@ class HomeViewPresenterTests: XCTestCase {
         let expectation = self.expectation(description: #function)
 
         sut.getNewData { list in
-            XCTAssertNil(list)
+            XCTAssertTrue(list!.isEmpty)
             expectation.fulfill()
         }
 
