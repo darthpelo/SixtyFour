@@ -10,9 +10,18 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    var window: UIWindow?
+    private var coordinator = RootCoordinator()
+
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        true
+        if #available(iOS 13, *) {
+            return true
+        } else {
+            coordinator.startup(window)
+            return true
+        }
+
+        return true
     }
 
     // MARK: UISceneSession Lifecycle

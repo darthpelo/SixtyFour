@@ -15,6 +15,9 @@
 		4C5284FC24B08F4100FA7482 /* Preferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C5284FB24B08F4100FA7482 /* Preferences.plist */; };
 		4C5284FE24B08F9F00FA7482 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5284FD24B08F9F00FA7482 /* Preferences.swift */; };
 		4C52850024B091BC00FA7482 /* PreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5284FF24B091BC00FA7482 /* PreferencesTests.swift */; };
+		4C52850224B0986C00FA7482 /* NSObject+ClassIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C52850124B0986C00FA7482 /* NSObject+ClassIdentifier.swift */; };
+		4C52850424B0A92C00FA7482 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C52850324B0A92C00FA7482 /* RootCoordinator.swift */; };
+		4C52850624B0AA3A00FA7482 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C52850524B0AA3A00FA7482 /* HomeCoordinator.swift */; };
 		4CCB281324AE5DD900E3241C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB281224AE5DD900E3241C /* AppDelegate.swift */; };
 		4CCB281524AE5DD900E3241C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCB281424AE5DD900E3241C /* SceneDelegate.swift */; };
 		4CCB281A24AE5DD900E3241C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CCB281824AE5DD900E3241C /* Main.storyboard */; };
@@ -55,6 +58,9 @@
 		4C5284FB24B08F4100FA7482 /* Preferences.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Preferences.plist; sourceTree = "<group>"; };
 		4C5284FD24B08F9F00FA7482 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		4C5284FF24B091BC00FA7482 /* PreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesTests.swift; sourceTree = "<group>"; };
+		4C52850124B0986C00FA7482 /* NSObject+ClassIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+ClassIdentifier.swift"; sourceTree = "<group>"; };
+		4C52850324B0A92C00FA7482 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
+		4C52850524B0AA3A00FA7482 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		4CCB280F24AE5DD900E3241C /* SixtyFour.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SixtyFour.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CCB281224AE5DD900E3241C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CCB281424AE5DD900E3241C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				4C5284EF24AF735700FA7482 /* BaseCoordinator.swift */,
+				4C52850324B0A92C00FA7482 /* RootCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -124,8 +131,9 @@
 		4C5284F624AFB02700FA7482 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				4C5284F724AFB04200FA7482 /* HomeViewController.swift */,
+				4C52850524B0AA3A00FA7482 /* HomeCoordinator.swift */,
 				4C5284F924AFB04D00FA7482 /* HomePresenter.swift */,
+				4C5284F724AFB04200FA7482 /* HomeViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -187,6 +195,7 @@
 			children = (
 				4CCB283D24AE78FF00E3241C /* UserDefaults+Properties.swift */,
 				4CCB284A24AE8B8F00E3241C /* UIImage+Base64.swift */,
+				4C52850124B0986C00FA7482 /* NSObject+ClassIdentifier.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -364,9 +373,12 @@
 			files = (
 				4CCB281324AE5DD900E3241C /* AppDelegate.swift in Sources */,
 				4CCB283E24AE78FF00E3241C /* UserDefaults+Properties.swift in Sources */,
+				4C52850624B0AA3A00FA7482 /* HomeCoordinator.swift in Sources */,
+				4C52850224B0986C00FA7482 /* NSObject+ClassIdentifier.swift in Sources */,
 				4C5284FE24B08F9F00FA7482 /* Preferences.swift in Sources */,
 				4CCB283924AE767C00E3241C /* OCRModel.swift in Sources */,
 				4CCB284024AE7B3800E3241C /* ModelConverter.swift in Sources */,
+				4C52850424B0A92C00FA7482 /* RootCoordinator.swift in Sources */,
 				4CCB281524AE5DD900E3241C /* SceneDelegate.swift in Sources */,
 				4C5284F824AFB04200FA7482 /* HomeViewController.swift in Sources */,
 				4CCB285324AF194800E3241C /* MarloveService.swift in Sources */,
