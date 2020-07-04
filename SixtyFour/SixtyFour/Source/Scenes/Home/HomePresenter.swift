@@ -9,7 +9,13 @@
 import Foundation
 import Moya
 
-final class HomePresenter {
+protocol HomeInterface {
+    func firstLoad(completion: @escaping ([OCRModel]?) -> Void)
+    func getNewData(completion: @escaping ([OCRModel]?) -> Void)
+    func getOldData(completion: @escaping ([OCRModel]?) -> Void)
+}
+
+final class HomePresenter: HomeInterface {
     private let provider: MoyaProvider<MarloveService>
     private var list: [OCRModel] = []
 
@@ -52,6 +58,8 @@ final class HomePresenter {
             completion(self.list)
         }
     }
+
+    // MARK: - Private
 
     private func decodeResult(_ result: Result<Response, MoyaError>) -> [OCRModel]? {
         switch result {
