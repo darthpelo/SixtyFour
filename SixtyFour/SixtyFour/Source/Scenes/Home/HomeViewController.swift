@@ -9,7 +9,32 @@
 import UIKit
 
 final class HomeViewController: UIViewController {
-    private var viewModel: HomeInterface?
+    @IBOutlet var emptyContentSpinner: UIActivityIndicatorView!
+    @IBOutlet var ocrList: UITableView!
+
+    private var presenter: HomeInterface?
+    private var list: [OCRModel] = []
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        ocrList.isHidden = true
+
+        emptyContentSpinner.isHidden = false
+        emptyContentSpinner.hidesWhenStopped = true
+        emptyContentSpinner.startAnimating()
+
+        presenter?.firstLoad(completion: { [weak self] result in
+            if let list = result, list.isEmpty == false {
+                self?.list = list
+                DispatchQueue.main.async {
+                    self?.ocrList.isHidden = false
+                    self?.ocrList.reloadData()
+                    self?.emptyContentSpinner.stopAnimating()
+                }
+            }
+        })
+    }
 }
 
 // MARK: - Static factory
@@ -19,8 +44,25 @@ extension HomeViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: classIdentifier)
             as? HomeViewController
-        viewController?.viewModel = viewModel
+        viewController?.presenter = viewModel
 
         return viewController
+    }
+}
+
+// MARK: - UITableView Delegates
+
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        list.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+
+        cell.textLabel?.text = list[indexPath.row].text
+        cell.detailTextLabel?.text = list[indexPath.row].ocrId
+
+        return cell
     }
 }
