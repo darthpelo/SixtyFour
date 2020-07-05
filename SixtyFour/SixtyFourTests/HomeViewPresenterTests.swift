@@ -69,7 +69,7 @@ class HomeViewPresenterTests: XCTestCase {
         let expectation = self.expectation(description: #function)
 
         sut.getNewData {
-            XCTAssertEqual(sut.dataSourceElements(), 10)
+            XCTAssertTrue(sut.dataSourceElements() == 0)
             expectation.fulfill()
         }
 
