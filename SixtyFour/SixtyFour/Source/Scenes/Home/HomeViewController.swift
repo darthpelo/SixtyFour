@@ -14,6 +14,14 @@ final class HomeViewController: UIViewController {
 
     private var presenter: HomeInterface?
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        ocrList.backgroundView = refreshControl
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -28,6 +36,16 @@ final class HomeViewController: UIViewController {
                 self?.ocrList.isHidden = false
                 self?.ocrList.reloadData()
                 self?.emptyContentSpinner.stopAnimating()
+            }
+        }
+    }
+
+    @objc
+    func refresh(_ refreshControl: UIRefreshControl) {
+        presenter?.getNewData {
+            DispatchQueue.main.async {
+                self.updateUI()
+                refreshControl.endRefreshing()
             }
         }
     }
@@ -50,7 +68,9 @@ extension HomeViewController {
 
 extension HomeViewController: HomeViewInterface {
     func updateUI() {
-        ocrList.reloadData()
+        DispatchQueue.main.async {
+            self.ocrList.reloadData()
+        }
     }
 }
 

@@ -33,27 +33,34 @@ final class HomePresenter: HomeInterface {
     func firstLoad(_ view: HomeViewInterface, completion: @escaping () -> Void) {
         self.view = view
 
-        provider.request(.items(sinceId: nil, maxId: nil)) { [weak self] result in
+        provider.request(.items(sinceId: nil, maxId: "5e4eb3c57258d")) { [weak self] result in
             guard let self = self else {
                 completion()
                 return
             }
-
-            self.list = self.decodeResult(result) ?? []
+            self.list.append(contentsOf: self.decodeResult(result) ?? [])
             completion()
         }
     }
 
     func getNewData(completion: @escaping () -> Void) {
-        provider.request(.items(sinceId: "", maxId: nil)) { [weak self] result in
-            guard let self = self else {
-                completion()
-                return
-            }
-            var newList = self.decodeResult(result) ?? []
-            newList.append(contentsOf: self.list)
-            self.list = newList
+        guard let firstElement = list.first else {
             completion()
+            return
+        }
+
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            self?.provider.request(.items(sinceId: firstElement.ocrId, maxId: nil)) { result in
+                guard let self = self else {
+                    completion()
+                    return
+                }
+
+                var newList = self.decodeResult(result) ?? []
+                newList.append(contentsOf: self.list)
+                self.list = newList
+                completion()
+            }
         }
     }
 
@@ -78,13 +85,7 @@ final class HomePresenter: HomeInterface {
             return nil
         }
 
-        if index == list.count - 1 {
-            DispatchQueue.global(qos: .background).async { [weak self] in
-                self?.getOldData {
-                    self?.view?.updateUI()
-                }
-            }
-        }
+        fetchOldData(index)
         return list[index]
     }
 
@@ -105,6 +106,16 @@ final class HomePresenter: HomeInterface {
             }
         case .failure:
             return nil
+        }
+    }
+
+    private func fetchOldData(_ index: Int) {
+        if index == list.count - 1 {
+            DispatchQueue.global(qos: .background).async { [weak self] in
+                self?.getOldData {
+                    self?.view?.updateUI()
+                }
+            }
         }
     }
 }
