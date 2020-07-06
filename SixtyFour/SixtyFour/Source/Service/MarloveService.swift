@@ -6,6 +6,7 @@
 //  Copyright © 2020 Alessio Roberto. All rights reserved.
 //
 
+import Alamofire
 import Foundation
 import Moya
 
@@ -61,5 +62,18 @@ extension MarloveService: TargetType {
         } catch {
             return nil
         }
+    }
+}
+
+extension MarloveService {
+    static func getSession() -> Session {
+        let serverTrustPolicies: [String: ServerTrustEvaluating] = [
+            // By default, certificates included in the app bundle are pinned automatically.
+            "marlove.net": PinnedCertificatesTrustEvaluator(),
+        ]
+
+        let manager = ServerTrustManager(evaluators: serverTrustPolicies)
+        let configuration = URLSessionConfiguration.af.default
+        return Session(configuration: configuration, serverTrustManager: manager)
     }
 }
