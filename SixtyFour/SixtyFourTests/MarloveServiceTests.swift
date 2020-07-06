@@ -6,6 +6,7 @@
 //  Copyright © 2020 Alessio Roberto. All rights reserved.
 //
 
+import Alamofire
 import Moya
 @testable import SixtyFour
 import XCTest
@@ -181,5 +182,24 @@ class MarloveServiceTests: XCTestCase {
         }
 
         waitForExpectations(timeout: 6.0, handler: nil)
+    }
+
+    func testSSLPinning() {
+        let provider = MoyaProvider<MarloveService>(session: MarloveService.getSession())
+
+        let expectation = self.expectation(description: #function)
+
+        provider.request(.items(sinceId: nil, maxId: nil)) { result in
+            switch result {
+            case let .success(moyaResponse):
+                XCTAssertEqual(moyaResponse.statusCode, 200)
+            case let .failure(moyaError):
+                XCTAssert(false, moyaError.errorDescription ?? "Simple items request failed")
+            }
+
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 2.0, handler: nil)
     }
 }

@@ -26,7 +26,7 @@ final class HomePresenter: HomeInterface {
     private var list: [OCRModel] = []
     private var view: HomeViewInterface?
 
-    init(provider: MoyaProvider<MarloveService> = MoyaProvider<MarloveService>()) {
+    init(provider: MoyaProvider<MarloveService> = MoyaProvider<MarloveService>(session: MarloveService.getSession())) {
         self.provider = provider
     }
 
