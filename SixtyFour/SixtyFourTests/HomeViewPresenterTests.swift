@@ -37,39 +37,13 @@ class HomeViewPresenterTests: XCTestCase {
                                             stubClosure: MoyaProvider.immediatelyStub)
     }
 
-    func testPresenterFirstLoadSuccess() {
-        let sut = HomePresenter(provider: stubProviderSuccess())
-
-        let expectation = self.expectation(description: #function)
-
-        sut.firstLoad(HomeViewController()) {
-            XCTAssertEqual(sut.dataSourceElements(), 10)
-            expectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 1.0, handler: nil)
-    }
-
-    func testPresenterFirstLoadFailure() {
-        let sut = HomePresenter(provider: stubProviderFailure())
-
-        let expectation = self.expectation(description: #function)
-
-        sut.firstLoad(HomeViewController()) {
-            XCTAssertTrue(sut.dataSourceElements() == 0)
-            expectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 1.0, handler: nil)
-    }
-
     func testPresenterGetNewDataSuccess() {
         let sut = HomePresenter(provider: stubProviderSuccess())
 
         let expectation = self.expectation(description: #function)
 
         sut.getNewData {
-            XCTAssertTrue(sut.dataSourceElements() == 0)
+            XCTAssertTrue(sut.currentCount == 0)
             expectation.fulfill()
         }
 
@@ -82,7 +56,7 @@ class HomeViewPresenterTests: XCTestCase {
         let expectation = self.expectation(description: #function)
 
         sut.getNewData {
-            XCTAssertTrue(sut.dataSourceElements() == 0)
+            XCTAssertTrue(sut.currentCount == 0)
             expectation.fulfill()
         }
 
@@ -94,8 +68,8 @@ class HomeViewPresenterTests: XCTestCase {
 
         let expectation = self.expectation(description: #function)
 
-        sut.getOldData {
-            XCTAssertTrue(sut.dataSourceElements() == 0)
+        sut.getOldData { _ in
+            XCTAssertTrue(sut.currentCount == 10)
             expectation.fulfill()
         }
 
@@ -107,8 +81,8 @@ class HomeViewPresenterTests: XCTestCase {
 
         let expectation = self.expectation(description: #function)
 
-        sut.getOldData {
-            XCTAssertTrue(sut.dataSourceElements() == 0)
+        sut.getOldData { _ in
+            XCTAssertEqual(sut.currentCount, 0)
             expectation.fulfill()
         }
 
@@ -120,27 +94,8 @@ class HomeViewPresenterTests: XCTestCase {
 
         let expectation = self.expectation(description: #function)
 
-        sut.firstLoad(HomeViewController()) {
-            XCTAssertEqual(sut.dataSourceElements(), 10)
-        }
-
         sut.getNewData {
-            XCTAssertEqual(sut.dataSourceElements(), 20)
-            expectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 5.0, handler: nil)
-    }
-
-    func testDataSource() {
-        let sut = HomePresenter(provider: stubProviderSuccess())
-
-        XCTAssertEqual(sut.dataSourceElements(), 0)
-
-        let expectation = self.expectation(description: #function)
-
-        sut.firstLoad(HomeViewController()) {
-            XCTAssertEqual(sut.dataSourceElements(), 10)
+            XCTAssertEqual(sut.currentCount, 0)
             expectation.fulfill()
         }
 

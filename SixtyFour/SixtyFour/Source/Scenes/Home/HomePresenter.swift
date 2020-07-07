@@ -10,19 +10,19 @@ import Foundation
 import Moya
 
 protocol HomeInterface {
-    func firstLoad(_: HomeViewInterface, completion: @escaping () -> Void)
-    func getNewData(completion: @escaping () -> Void)
-    func getOldData(completion: @escaping () -> Void)
-    func dataSource(atIndex index: Int) -> OCRModel?
-    func dataSourceElements() -> Int
-}
+    var currentCount: Int { get }
 
-protocol HomeViewInterface {
-    func updateUI()
+    func getNewData(completion: @escaping () -> Void)
+    func getOldData(completion: @escaping ([IndexPath]?) -> Void)
+    func dataSource(atIndex index: Int) -> OCRModel?
 }
 
 final class HomePresenter: HomeInterface {
     typealias Dependencies = HasLocalStorageService
+
+    var currentCount: Int {
+        list.count
+    }
 
     private var dependencies: Dependencies?
     private let provider: MoyaProvider<MarloveService>
@@ -32,8 +32,8 @@ final class HomePresenter: HomeInterface {
         }
     }
 
-    private var lastObjId: String?
-    private var view: HomeViewInterface?
+    private var isFetchInProgress = false
+    private var isEndOfData = false
 
     init(provider: MoyaProvider<MarloveService> = MoyaProvider<MarloveService>(session: MarloveService.getSession()),
          _ dependencies: Dependencies? = nil) {
@@ -41,80 +41,76 @@ final class HomePresenter: HomeInterface {
         self.dependencies = dependencies
     }
 
-    func firstLoad(_ view: HomeViewInterface, completion: @escaping () -> Void) {
-        self.view = view
-
-        if let chachedData: [OCRModel] = dependencies?.localStorage.read() {
-            list = Array(chachedData.prefix(10))
-            lastObjId = list.last?.ocrId
-            completion()
-        } else {
-            provider.request(.items(sinceId: nil, maxId: "5e4eb3c57258d")) { [weak self] result in
-                guard let self = self else {
-                    completion()
-                    return
-                }
-                self.list.append(contentsOf: self.decodeResult(result) ?? [])
-                completion()
-            }
-        }
-    }
-
     func getNewData(completion: @escaping () -> Void) {
+        guard !isFetchInProgress else {
+            return
+        }
+
         guard let firstElement = list.first else {
             completion()
             return
         }
 
+        isFetchInProgress = true
+
         DispatchQueue.global(qos: .background).async { [weak self] in
             self?.provider.request(.items(sinceId: firstElement.ocrId, maxId: nil)) { result in
-                guard let self = self else {
-                    completion()
-                    return
+                if let newList = self?.decodeResult(result) {
+                    self?.list.insert(contentsOf: newList, at: 0)
                 }
 
-                var newList = self.decodeResult(result) ?? []
-                newList.append(contentsOf: self.list)
-                self.list = newList
+                self?.isFetchInProgress = false
                 completion()
             }
         }
     }
 
-    func getOldData(completion: @escaping () -> Void) {
-        guard let lastElement = lastObjId else {
-            completion()
+    func getOldData(completion: @escaping ([IndexPath]?) -> Void) {
+        guard !isFetchInProgress || !isEndOfData else {
             return
         }
 
-        provider.request(.items(sinceId: nil, maxId: lastElement)) { [weak self] result in
-            guard let self = self else {
-                completion()
-                return
+        if let chachedData: [OCRModel] = dependencies?.localStorage.read(), list.isEmpty {
+            list = Array(chachedData.prefix(10))
+            completion(.none)
+        } else {
+            isFetchInProgress = true
+
+            DispatchQueue.global(qos: .background).async { [weak self] in
+                guard let self = self else { return }
+
+                self.provider.request(.items(sinceId: nil, maxId: self.list.last?.ocrId)) { result in
+                    if let newData = self.decodeResult(result), !self.list.isEmpty {
+                        if newData.isEmpty {
+                            self.isFetchInProgress = false
+                            self.isEndOfData = true
+                            completion(.none)
+                        }
+                        self.list.append(contentsOf: newData)
+                        self.isFetchInProgress = false
+                        completion(self.calculateIndexPathsToReload(from: newData))
+                    } else {
+                        let newData = self.decodeResult(result) ?? []
+                        self.list.append(contentsOf: newData)
+                        self.isFetchInProgress = false
+                        completion(.none)
+                    }
+                }
             }
-            let oldData = self.decodeResult(result) ?? []
-            if oldData.isEmpty == false, oldData.last?.ocrId != self.lastObjId {
-                self.list.append(contentsOf: oldData)
-                self.lastObjId = self.list.last?.ocrId
-            }
-            completion()
         }
     }
 
     func dataSource(atIndex index: Int) -> OCRModel? {
-        guard index >= 0, index < list.count else {
-            return nil
-        }
-
-        fetchOldData(index)
-        return list[index]
-    }
-
-    func dataSourceElements() -> Int {
-        list.count
+        list[index]
     }
 
     // MARK: - Private
+
+    private func calculateIndexPathsToReload(from newOcr: [OCRModel]) -> [IndexPath] {
+        let startIndex = list.count - newOcr.count
+        let endIndex = startIndex + newOcr.count
+        return (startIndex ..< endIndex).map { IndexPath(row: $0, section: 0) }
+    }
 
     private func decodeResult(_ result: Result<Response, MoyaError>) -> [OCRModel]? {
         switch result {
@@ -127,14 +123,6 @@ final class HomePresenter: HomeInterface {
             }
         case .failure:
             return nil
-        }
-    }
-
-    private func fetchOldData(_ index: Int) {
-        if index == list.count - 1 {
-            getOldData {
-                self.view?.updateUI()
-            }
         }
     }
 
