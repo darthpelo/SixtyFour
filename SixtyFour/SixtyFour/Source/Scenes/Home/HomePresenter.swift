@@ -22,24 +22,41 @@ protocol HomeViewInterface {
 }
 
 final class HomePresenter: HomeInterface {
+    typealias Dependencies = HasLocalStorageService
+
+    private var dependencies: Dependencies?
     private let provider: MoyaProvider<MarloveService>
-    private var list: [OCRModel] = []
+    private var list: [OCRModel] = [] {
+        didSet {
+            cacheData()
+        }
+    }
+
+    private var lastObjId: String?
     private var view: HomeViewInterface?
 
-    init(provider: MoyaProvider<MarloveService> = MoyaProvider<MarloveService>(session: MarloveService.getSession())) {
+    init(provider: MoyaProvider<MarloveService> = MoyaProvider<MarloveService>(session: MarloveService.getSession()),
+         _ dependencies: Dependencies? = nil) {
         self.provider = provider
+        self.dependencies = dependencies
     }
 
     func firstLoad(_ view: HomeViewInterface, completion: @escaping () -> Void) {
         self.view = view
 
-        provider.request(.items(sinceId: nil, maxId: "5e4eb3c57258d")) { [weak self] result in
-            guard let self = self else {
-                completion()
-                return
-            }
-            self.list.append(contentsOf: self.decodeResult(result) ?? [])
+        if let chachedData: [OCRModel] = dependencies?.localStorage.read() {
+            list = Array(chachedData.prefix(10))
+            lastObjId = list.last?.ocrId
             completion()
+        } else {
+            provider.request(.items(sinceId: nil, maxId: "5e4eb3c57258d")) { [weak self] result in
+                guard let self = self else {
+                    completion()
+                    return
+                }
+                self.list.append(contentsOf: self.decodeResult(result) ?? [])
+                completion()
+            }
         }
     }
 
@@ -65,17 +82,21 @@ final class HomePresenter: HomeInterface {
     }
 
     func getOldData(completion: @escaping () -> Void) {
-        guard let lastElement = list.last else {
+        guard let lastElement = lastObjId else {
             completion()
             return
         }
 
-        provider.request(.items(sinceId: nil, maxId: lastElement.ocrId)) { [weak self] result in
+        provider.request(.items(sinceId: nil, maxId: lastElement)) { [weak self] result in
             guard let self = self else {
                 completion()
                 return
             }
-            self.list.append(contentsOf: self.decodeResult(result) ?? [])
+            let oldData = self.decodeResult(result) ?? []
+            if oldData.isEmpty == false, oldData.last?.ocrId != self.lastObjId {
+                self.list.append(contentsOf: oldData)
+                self.lastObjId = self.list.last?.ocrId
+            }
             completion()
         }
     }
@@ -111,11 +132,13 @@ final class HomePresenter: HomeInterface {
 
     private func fetchOldData(_ index: Int) {
         if index == list.count - 1 {
-            DispatchQueue.global(qos: .background).async { [weak self] in
-                self?.getOldData {
-                    self?.view?.updateUI()
-                }
+            getOldData {
+                self.view?.updateUI()
             }
         }
+    }
+
+    private func cacheData() {
+        dependencies?.localStorage.write(data: list)
     }
 }

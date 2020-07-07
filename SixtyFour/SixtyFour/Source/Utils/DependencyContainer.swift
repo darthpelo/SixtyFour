@@ -8,10 +8,18 @@
 
 import Foundation
 
-struct AppDependency {}
+protocol HasLocalStorageService {
+    var localStorage: LocalStorageService { get }
+}
+
+struct AppDependency: HasLocalStorageService {
+    var localStorage: LocalStorageService
+}
 
 class DependencyContainer {
+    private lazy var localStorage: LocalStorageService = LocalStorage()
+
     func makeContainer() -> AppDependency {
-        AppDependency()
+        AppDependency(localStorage: localStorage)
     }
 }
