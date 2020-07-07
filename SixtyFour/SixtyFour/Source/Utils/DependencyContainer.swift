@@ -16,6 +16,7 @@ struct AppDependency: HasLocalStorageService {
     var localStorage: LocalStorageService
 }
 
+@available(iOS 13.0, *)
 class DependencyContainer {
     private lazy var localStorage: LocalStorageService = LocalStorage()
 

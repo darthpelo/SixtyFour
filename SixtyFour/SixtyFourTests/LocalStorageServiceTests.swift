@@ -43,6 +43,6 @@ class LocalStorageServiceTests: XCTestCase {
         XCTAssertEqual(OCRModel(ocrId: MockOCRModel.ocrId,
                                 text: MockOCRModel.text,
                                 confidence: MockOCRModel.confidence,
-                                imageString: MockOCRModel.imageString), result!)
+                                imageString: MockOCRModel.imageString), result)
     }
 }
