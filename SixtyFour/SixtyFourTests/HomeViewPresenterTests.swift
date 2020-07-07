@@ -115,23 +115,6 @@ class HomeViewPresenterTests: XCTestCase {
         waitForExpectations(timeout: 1.0, handler: nil)
     }
 
-    func testFirstLoadAndGetOldData() {
-        let sut = HomePresenter(provider: stubProviderSuccess())
-
-        let expectation = self.expectation(description: #function)
-
-        sut.firstLoad(HomeViewController()) {
-            XCTAssertEqual(sut.dataSourceElements(), 10)
-        }
-
-        sut.getOldData {
-            XCTAssertEqual(sut.dataSourceElements(), 20)
-            expectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 5.0, handler: nil)
-    }
-
     func testFirstLoadAndGetNewData() {
         let sut = HomePresenter(provider: stubProviderSuccess())
 
@@ -143,6 +126,21 @@ class HomeViewPresenterTests: XCTestCase {
 
         sut.getNewData {
             XCTAssertEqual(sut.dataSourceElements(), 20)
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 5.0, handler: nil)
+    }
+
+    func testDataSource() {
+        let sut = HomePresenter(provider: stubProviderSuccess())
+
+        XCTAssertEqual(sut.dataSourceElements(), 0)
+
+        let expectation = self.expectation(description: #function)
+
+        sut.firstLoad(HomeViewController()) {
+            XCTAssertEqual(sut.dataSourceElements(), 10)
             expectation.fulfill()
         }
 

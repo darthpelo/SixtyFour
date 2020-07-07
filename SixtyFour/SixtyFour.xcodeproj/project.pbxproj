@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4C3E21D424B3323700FF154A /* marlove.crt in Resources */ = {isa = PBXBuildFile; fileRef = 4C3E21D324B3323600FF154A /* marlove.crt */; };
+		4C3E21D724B3531300FF154A /* LocalStorageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E21D624B3531300FF154A /* LocalStorageServiceTests.swift */; };
+		4C3E21D924B3655700FF154A /* LocalStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3E21D824B3655700FF154A /* LocalStorageService.swift */; };
 		4C5284F024AF735700FA7482 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5284EF24AF735700FA7482 /* BaseCoordinator.swift */; };
 		4C5284F324AF744000FA7482 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5284F224AF744000FA7482 /* DependencyContainer.swift */; };
 		4C5284F524AFADBF00FA7482 /* HomeViewPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5284F424AFADBF00FA7482 /* HomeViewPresenterTests.swift */; };
@@ -61,6 +63,8 @@
 
 /* Begin PBXFileReference section */
 		4C3E21D324B3323600FF154A /* marlove.crt */ = {isa = PBXFileReference; lastKnownFileType = file; path = marlove.crt; sourceTree = "<group>"; };
+		4C3E21D624B3531300FF154A /* LocalStorageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageServiceTests.swift; sourceTree = "<group>"; };
+		4C3E21D824B3655700FF154A /* LocalStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageService.swift; sourceTree = "<group>"; };
 		4C5284EF24AF735700FA7482 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		4C5284F224AF744000FA7482 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		4C5284F424AFADBF00FA7482 /* HomeViewPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenterTests.swift; sourceTree = "<group>"; };
@@ -235,6 +239,7 @@
 				4CCB284124AE7BA900E3241C /* ModelConverterTests.swift */,
 				4CCB283524AE75C900E3241C /* OCRModelTests.swift */,
 				4C5284FF24B091BC00FA7482 /* PreferencesTests.swift */,
+				4C3E21D624B3531300FF154A /* LocalStorageServiceTests.swift */,
 			);
 			path = SixtyFourTests;
 			sourceTree = "<group>";
@@ -292,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				4CCB285224AF194800E3241C /* MarloveService.swift */,
+				4C3E21D824B3655700FF154A /* LocalStorageService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -485,6 +491,7 @@
 				4C5284F324AF744000FA7482 /* DependencyContainer.swift in Sources */,
 				4C5284F024AF735700FA7482 /* BaseCoordinator.swift in Sources */,
 				4C5284FA24AFB04D00FA7482 /* HomePresenter.swift in Sources */,
+				4C3E21D924B3655700FF154A /* LocalStorageService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -497,6 +504,7 @@
 				4CCB284824AE846500E3241C /* base64ConverterTests.swift in Sources */,
 				4CCB285524AF210100E3241C /* MarloveServiceTests.swift in Sources */,
 				4CCB284224AE7BA900E3241C /* ModelConverterTests.swift in Sources */,
+				4C3E21D724B3531300FF154A /* LocalStorageServiceTests.swift in Sources */,
 				4CCB283624AE75C900E3241C /* OCRModelTests.swift in Sources */,
 				4C52850024B091BC00FA7482 /* PreferencesTests.swift in Sources */,
 			);

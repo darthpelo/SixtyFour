@@ -16,7 +16,7 @@ final class HomeCoordinator: BaseCoordinator {
             return
         }
 
-        homePresenter = HomePresenter()
+        homePresenter = HomePresenter(dependencies)
 
         guard let presenter = homePresenter,
             let viewController = HomeViewController.createWith(presenter) as? HomeViewController else {
