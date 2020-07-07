@@ -17,7 +17,7 @@ class SixtyFourUITests: XCTestCase {
         XCTAssertFalse(app.activityIndicators["In progress"].exists)
     }
 
-    func testTableViewVisible() {
+    func testTableViewVisibleAfterFirstLunch() {
         let app = XCUIApplication()
         app.launch()
 

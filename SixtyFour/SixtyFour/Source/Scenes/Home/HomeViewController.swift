@@ -31,23 +31,33 @@ final class HomeViewController: UIViewController {
         emptyContentSpinner.hidesWhenStopped = true
         emptyContentSpinner.startAnimating()
 
-        presenter?.firstLoad(self) { [weak self] in
-            DispatchQueue.main.async {
-                self?.ocrList.isHidden = false
-                self?.ocrList.reloadData()
-                self?.emptyContentSpinner.stopAnimating()
+        presenter?.getOldData(completion: { newIndexPathsToReload in
+            guard let newIndexPathsToReload = newIndexPathsToReload else {
+                self.ocrList.isHidden = false
+                self.ocrList.reloadData()
+                self.emptyContentSpinner.stopAnimating()
+                return
             }
-        }
+        })
     }
 
     @objc
     func refresh(_ refreshControl: UIRefreshControl) {
         presenter?.getNewData {
             DispatchQueue.main.async {
-                self.updateUI()
+                self.ocrList.reloadData()
                 refreshControl.endRefreshing()
             }
         }
+    }
+}
+
+private extension HomeViewController {
+    func isLoadingCell(for indexPath: IndexPath) -> Bool {
+        guard let count = presenter?.currentCount else {
+            return false
+        }
+        return indexPath.row >= count - 1
     }
 }
 
@@ -64,21 +74,27 @@ extension HomeViewController {
     }
 }
 
-// MARK: - HomeViewInterface
-
-extension HomeViewController: HomeViewInterface {
-    func updateUI() {
-        DispatchQueue.main.async {
-            self.ocrList.reloadData()
-        }
-    }
-}
-
 // MARK: - UITableView Delegates
 
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        if indexPaths.contains(where: isLoadingCell) {
+            // For a generic implementation in case you want to load new data without pull-to-refresh logic
+            // you would like to reload only a specific section, not all the list. I kept the generic approach, but
+            // without use it.
+            // In a generic approach, if newIndexPathsToReload is not nil, we will use tableView.reloadRows
+            presenter?.getOldData(completion: { newIndexPathsToReload in
+                guard newIndexPathsToReload != nil else {
+                    tableView.reloadData()
+                    return
+                }
+                tableView.reloadData()
+            })
+        }
+    }
+
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        presenter?.dataSourceElements() ?? 0
+        presenter?.currentCount ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
