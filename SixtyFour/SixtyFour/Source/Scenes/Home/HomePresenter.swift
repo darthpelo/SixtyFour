@@ -13,7 +13,7 @@ protocol HomeInterface {
     var currentCount: Int { get }
 
     func getNewData(completion: @escaping () -> Void)
-    func getOldData(completion: @escaping ([IndexPath]?) -> Void)
+    func fetchOcrs(completion: @escaping () -> Void)
     func dataSource(atIndex index: Int) -> OCRModel?
 }
 
@@ -65,14 +65,14 @@ final class HomePresenter: HomeInterface {
         }
     }
 
-    func getOldData(completion: @escaping ([IndexPath]?) -> Void) {
+    func fetchOcrs(completion: @escaping () -> Void) {
         guard !isFetchInProgress || !isEndOfData else {
             return
         }
 
         if let chachedData: [OCRModel] = dependencies?.localStorage.read(), list.isEmpty {
             list = Array(chachedData.prefix(10))
-            completion(.none)
+            completion()
         } else {
             isFetchInProgress = true
 
@@ -80,21 +80,13 @@ final class HomePresenter: HomeInterface {
                 guard let self = self else { return }
 
                 self.provider.request(.items(sinceId: nil, maxId: self.list.last?.ocrId)) { result in
-                    if let newData = self.decodeResult(result), !self.list.isEmpty {
-                        if newData.isEmpty {
-                            self.isFetchInProgress = false
-                            self.isEndOfData = true
-                            completion(.none)
-                        }
+                    if let newData = self.decodeResult(result) {
                         self.list.append(contentsOf: newData)
-                        self.isFetchInProgress = false
-                        completion(self.calculateIndexPathsToReload(from: newData))
                     } else {
-                        let newData = self.decodeResult(result) ?? []
-                        self.list.append(contentsOf: newData)
-                        self.isFetchInProgress = false
-                        completion(.none)
+                        self.isEndOfData = true
                     }
+                    self.isFetchInProgress = false
+                    completion()
                 }
             }
         }
@@ -105,12 +97,6 @@ final class HomePresenter: HomeInterface {
     }
 
     // MARK: - Private
-
-    private func calculateIndexPathsToReload(from newOcr: [OCRModel]) -> [IndexPath] {
-        let startIndex = list.count - newOcr.count
-        let endIndex = startIndex + newOcr.count
-        return (startIndex ..< endIndex).map { IndexPath(row: $0, section: 0) }
-    }
 
     private func decodeResult(_ result: Result<Response, MoyaError>) -> [OCRModel]? {
         switch result {
