@@ -68,7 +68,7 @@ class HomeViewPresenterTests: XCTestCase {
 
         let expectation = self.expectation(description: #function)
 
-        sut.getOldData { _ in
+        sut.fetchOcrs {
             XCTAssertTrue(sut.currentCount == 10)
             expectation.fulfill()
         }
@@ -81,7 +81,7 @@ class HomeViewPresenterTests: XCTestCase {
 
         let expectation = self.expectation(description: #function)
 
-        sut.getOldData { _ in
+        sut.fetchOcrs {
             XCTAssertEqual(sut.currentCount, 0)
             expectation.fulfill()
         }
