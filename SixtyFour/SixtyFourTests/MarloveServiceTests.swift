@@ -6,9 +6,9 @@
 //  Copyright © 2020 Alessio Roberto. All rights reserved.
 //
 
+@testable import SixtyFour
 import Alamofire
 import Moya
-@testable import SixtyFour
 import XCTest
 
 class MarloveServiceTests: XCTestCase {

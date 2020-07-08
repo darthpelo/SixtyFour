@@ -1,23 +1,79 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
-
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
-
 default_platform(:ios)
 
 platform :ios do
-  desc "Description of what the lane does"
-  lane :custom_lane do
-    # add actions here: https://docs.fastlane.tools/actions
+
+  before_all do
+    xcode_select "/Applications/Xcode.app"
+  end
+
+  # ---------------------------
+  # Clean Lane
+  # ---------------------------
+  desc "Clean workspace"
+  lane :clean do
+    # Make sure our directory is clean, except for changes Fastlane has made
+    clean_build_artifacts
+    clear_derived_data
+  end
+
+  # ---------------------------
+  # PullRequest build lane
+  # ---------------------------
+  desc "Build PullRequest version"
+  lane :buildPullRequest do
+    if ENV['SCHEME'] != nil
+      cert
+      sigh(
+        username: ENV['SIGH_USERNAME'],
+        app_identifier: ENV['BUNDLE_IDENTIFIER'],
+        provisioning_name: ENV['PROVISION_NAME_INHOUSE'],
+        filename: "com.alessioroberto.mobileprovision",
+        adhoc: false,
+        force: false
+      )
+      update_project_provisioning(
+        xcodeproj: "SixtyFour.xcodeproj",
+        profile: "./com.alessioroberto.mobileprovision",
+        target_filter: "SixtyFour",
+        build_configuration: "Release"
+      )
+      build_ios_app(
+        scheme: ENV['SCHEME'],
+        configuration: 'Release',
+        export_method: 'enterprise'
+      )
+    else
+      execute_for_all_envs{ buildPullRequest }
+    end
+  end
+    
+  # ---------------------------
+  # AppCenter Lanes
+  # ---------------------------
+  desc "Submit to AppCenter for DEV"
+  lane :appCenterDEV do
+    if ENV['SCHEME'] != nil
+      appcenter_upload(
+        api_token: ENV['APPCENTER_TOKEN'],
+        owner_name: "alessioroberto",
+        app_name: ENV['APP_NAME'],
+        ipa: ENV['APP_IPA'],
+        dsym: ENV['APP_DSYM'],
+        app_platform: 'iOS',
+        app_os: 'iOS',
+        destination_type: "group",
+        notify_testers: false
+      )
+    else
+      execute_for_all_envs{ appCenterDEV }
+    end
+  end
+end
+
+def execute_for_all_envs
+  schemeList = Dir.glob(".env.*")
+  schemeList.each do |file|
+    Dotenv.overload(file)
+    yield
   end
 end
